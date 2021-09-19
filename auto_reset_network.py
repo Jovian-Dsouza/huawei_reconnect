@@ -24,22 +24,23 @@ def reset_4G(client):
 user = "admin"
 password = "admin123"
 ip = "192.168.0.1"
-# Set band
-try :
-    url = "http://" + user + ":" + password + "@" + ip
-    connection = AuthorizedConnection(url)
-    client = Client(connection)
 
-    while True:
-        plmn = client.net.current_plmn()
-        # print(plmn)
-        if(plmn == "FAILED" or plmn['Rat'] != '7'):
-            print("Reseting 4G")
-            reset_4G(client)
+while True:
+    try :
+        url = "http://" + user + ":" + password + "@" + ip
+        connection = AuthorizedConnection(url)
+        client = Client(connection)
 
-        # print("Ok")
-        sleep(5)
+        while True:
+            plmn = client.net.current_plmn()
+            # print(plmn)
+            if(plmn == "FAILED" or plmn['Rat'] != '7'):
+                print("Reseting 4G")
+                reset_4G(client)
 
-except Exception as e :
-	print("Connection error - " + str(e))
-	exit()
+            # print("Ok")
+            sleep(5)
+
+    except Exception as e :
+        print("Connection error - " + str(e))
+        sleep(10)
